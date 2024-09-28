@@ -1,0 +1,87 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/dashboard}">
+
+<head>
+<title>Dashboard Data Report</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+	$(document).ready(function() {
+		$(function() {
+			var lcIssueDateTextFrom = $('#lcIssueDateTextFrom').datepicker({
+				dateFormat : 'dd/mm/yy'
+			}).val();
+			var lcIssueDateTextTo = $('#lcIssueDateTextTo').datepicker({
+				dateFormat : 'dd/mm/yy'
+			}).val();
+
+		});
+
+	});
+
+	$(function() {
+		$("#example1").DataTable({
+			"fixedHeader" : true,
+			//"paging": false,
+			"responsive" : true,
+			"responsive" : true,
+			"lengthChange" : false,
+			"autoWidth" : false,
+			"buttons" : [ "excel" ],
+
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+	});
+</script>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<br>
+		<div class="border">
+			<h3 style="margin-left: 18px;">Dashboard Data Report</h3>
+			<div class="border" style="margin-left: 10px; margin-right: 10px;">
+				<div style="margin-top: 10px; margin-bottom: 10px;">
+					
+				</div>
+				<br>
+			</div>
+			<br>
+			<hr>
+			<div class="card-body"
+				style="overflow-x: scroll; margin-right: 10px;">
+				<!-- overflow-y: scroll; -->
+				<table id="example1" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>SL</th>
+							<th>Request Code</th>
+							<th>Issuing Branch</th>
+							<th>LC No</th>
+							<th>Currency</th>
+							<th>FC Amount</th>
+							<th>Applicant Details</th>
+							<th>Beneficiary Details</th>
+							<th>LC Type</th>
+							<th>Tenor</th>
+							<th>Goods/Commodity</th>
+							<th>Country of Origin</th>
+							<th>Beneficiary Bank</th>
+							<th>Confirming Bank</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+<style>
+div.container {
+	width: 80%;
+}
+</style>
+</html>

@@ -1,0 +1,297 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/dashboard}">
+
+<head>
+	<title>Bootstrap 4 Example</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>-->
+
+
+
+	<script type="text/javascript">
+
+		let serialNumber = 1;
+
+		function addImplants() {
+			// Get the selected values from the dropdowns
+			let implantsName = $("#implantsName option:selected").text();
+			let implantsType = $("#implantsType option:selected").text();
+			let implantsSize = $("#implantsSize option:selected").val();
+			let implantsQuantity = $("#implantsQuantity option:selected").val();
+
+			// Calculate amount (example: size * quantity)
+			let amount = implantsSize * implantsQuantity; // You can replace this with your logic
+
+			// Append a new row to the table
+			let newRow = `
+        <tr>
+            <td>${serialNumber++}</td>
+            <td>${implantsName}</td>
+            <td>${implantsType}</td>
+            <td>${implantsSize}</td>
+            <td>${implantsQuantity}</td>
+            <td>${amount}</td>
+            <td><button class="btn btn-danger btn-sm deleteRow">Delete</button></td>
+            <td><button class="btn btn-primary btn-sm updateRow">Update</button></td>
+        </tr>
+    `;
+
+			$("#dataTable tbody").append(newRow);
+
+			// Add click event for delete button
+			$(".deleteRow").click(function () {
+				$(this).closest("tr").remove();
+				updateSerialNumbers();
+			});
+
+			// Add click event for update button
+			$(".updateRow").click(function () {
+				// You can add update logic here
+				alert("Update functionality not implemented yet.");
+			});
+		}
+
+		function addInstrument() {
+			// Get the selected values from the dropdowns
+			let instrumentsName = $("select[name='instrumentsName'] option:selected").text();
+			let instrumentsSize = $("select[name='InstrumentsSize'] option:selected").val();
+			let instrumentsQuantity = $("select[name='InstrumentsQuantity'] option:selected").val();
+
+			// Calculate amount (example: size * quantity)
+			let amount = instrumentsSize * instrumentsQuantity; // You can replace this with your logic
+
+			// Append a new row to the table
+			let newRow = `
+        <tr>
+            <td>${serialNumber++}</td>
+            <td>${instrumentsName}</td>
+            <td>Instrument</td>
+            <td>${instrumentsSize}</td>
+            <td>${instrumentsQuantity}</td>
+            <td>${amount}</td>
+            <td><button class="btn btn-danger btn-sm deleteRow">Delete</button></td>
+            <td><button class="btn btn-primary btn-sm updateRow">Update</button></td>
+        </tr>
+    `;
+
+			$("#dataTable tbody").append(newRow);
+
+			// Add click event for delete button
+			$(".deleteRow").click(function () {
+				$(this).closest("tr").remove();
+				updateSerialNumbers();
+			});
+
+			// Add click event for update button
+			$(".updateRow").click(function () {
+				// You can add update logic here
+				alert("Update functionality not implemented yet.");
+			});
+		}
+
+		function updateSerialNumbers() {
+			let rows = $("#dataTable tbody tr");
+			serialNumber = 1;
+			rows.each(function () {
+				$(this).find("td:first").text(serialNumber++);
+			});
+		}
+
+
+
+		$(document).ready(function () {
+			$('#sendData').click(function () {
+				// Capture table data
+				const data = [];
+
+				$('#dataTable tbody tr').each(function () {
+					const $row = $(this);
+					const rowData = {
+						id: $row.find('td').eq(0).text(),
+						productName: $row.find('td').eq(1).text(),
+						productType: $row.find('td').eq(2).text(),
+						productSize: $row.find('td').eq(3).text(),
+						productQuantity: $row.find('td').eq(4).text(),
+						productAmount:$row.find('td').eq(5).text()
+					};
+					data.push(rowData);
+				});
+
+				console.log(data);
+
+				const supplierName = $('#supplierName option:selected').text();
+				const address = $('#address option:selected').text();
+				const date = $('#date').val();
+
+
+				const supplierData = {
+					name: supplierName,
+					address: address,
+					date: date
+				};
+
+				const PayLoadDto = {
+					name: supplierName,
+					address: address,
+					date: date,
+					purchaseDtoData: data,
+					supplierDataDto: supplierData
+
+				};
+
+				console.log('Payload:', PayLoadDto);
+
+				$.ajax({
+					url: "/scrm2/ticket/inbound",
+					type: "POST",
+					contentType: 'application/json',
+					data: JSON.stringify(PayLoadDto),
+					success: function (response) {
+						console.log('insert data');
+						console.log(response);
+					},
+					error: function (e) {
+						console.log(e);
+					}
+				});
+
+			});
+		});
+
+	</script>
+
+
+</head>
+
+<body>
+	<div layout:fragment="content">
+
+		<br>
+		<div class="border">
+			<h3 style="margin-left: 18px;">Create Purchase Order</h3>
+			<div class="border" style="margin-left: 10px; margin-right: 10px;">
+				<div style="margin-top: 10px; margin-bottom: 20px;">
+
+					<div class="row">
+						<div class="col" style="margin-left: 20px;">
+							<label><span style="color: red;">* </span>Supplier Name:</label>
+							<!--<select class="form-control" name="supplierName" required="required" id="supplierName">
+								<option value="001">Bd Ortho Care</option>
+								<option value="002">Ortho Applance</option>
+							</select>-->
+							
+							<select class="form-control input-sm" name="agencyStatusEntity">
+                                <option>Select Status</option>
+                                <option th:each="supplier :${supplierList}" th:value="${supplier.id}" th:text="${supplier.supplierName}"></option>
+                            </select>
+
+						</div>
+						<div class="col" style="margin-right: 10px;">
+							<label><span style="color: red;">* </span>Address:</label>
+							<select class="form-control" name="supplierAddress" required="required" id="address">
+								<option value="002">Shaber</option>
+								<option value="003">Nepal</option>
+							</select>
+						</div>
+						<div class="col" style="margin-right: 20px;">
+							<label><span style="color: red;">* </span> Date:</label>
+							<input type="date" class="form-control datepicker" id="date" name="fromDate"
+								placeholder="dd/mm/yy" required="required">
+						</div>
+
+					</div>
+					<h3 style="margin-left: 18px;">Implants & Instruments</h3>
+					<div class="row" style="margin-left: 20px; margin-right: 20px;">
+						<div class="col">
+							<label><span style="color: red;">* </span> Implants Name:</label>
+							<select class="form-control" name="implantsName" id="implantsName" required="required">
+								<option value="003">A</option>
+								<option value="004">B</option>
+							</select>
+						</div>
+						<div class="col">
+							<label><span style="color: red;">* </span> Implants Type:</label>
+							<select class="form-control" name="implantsType" id="implantsType" required="required">
+								<option value="004">SS</option>
+								<option value="006">TIT</option>
+							</select>
+						</div>
+						<div class="col">
+							<label><span style="color: red;">* </span> Implants Size:</label>
+							<select class="form-control" name="implantsSize" id="implantsSize" required="required">
+								<option value="1">1</option>
+								<option value="2">2</option>
+							</select>
+						</div>
+						<div class="col">
+							<label><span style="color: red;">* </span> Quantity:</label>
+							<select class="form-control" name="implantsQuantity" id="implantsQuantity"
+								required="required">
+								<option value="12">12</option>
+								<option value="11">11</option>
+							</select>
+						</div>
+						<div class="col" style="padding-top: 2%;">
+							<input class="btn btn-success" type="submit" name="addData" value="Add Data"
+								onclick="addImplants()" />
+						</div>
+					</div>
+					<br>
+					<div class="row">
+						<div class="col" style="margin-left: 35px;">
+							<label><span style="color: red;">* </span> Instruments Name:</label>
+							<select class="form-control" name="instrumentsName" required="required">
+								<option value="C">C</option>
+								<option value="D">D</option>
+							</select>
+
+						</div>
+						<div class="col" style="margin-right: 20px;">
+							<label><span style="color: red;">* </span>Instruments Size:</label>
+							<select class="form-control" name="InstrumentsSize" required="required">
+								<option value="5">5</option>
+								<option value="6">6</option>
+							</select>
+						</div>
+						<div class="col" style="margin-right: 20px;">
+							<label><span style="color: red;">* </span>Quantity:</label>
+							<select class="form-control" name="InstrumentsQuantity" required="required">
+								<option value="12">12</option>
+								<option value="11">11</option>
+							</select>
+						</div>
+						<div class="col" style="padding-top: 2%;">
+							<input type="button" name="add" value="Add Data" onclick="addInstrument();"
+								class="btn btn-success">
+						</div>
+					</div>
+					<br>
+					<table id="dataTable" class="table table-bordered table-striped">
+						<thead>
+							<tr>
+								<th>SL</th>
+								<th>Product Name</th>
+								<th>Product Type</th>
+								<th>Size</th>
+								<th>Quantity</th>
+								<th>Amount</th>
+								<th>Delete</th>
+								<th>Update</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- Rows will be added here dynamically -->
+						</tbody>
+					</table>
+
+					<button id="sendData" class="btn btn-success">Save Data</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

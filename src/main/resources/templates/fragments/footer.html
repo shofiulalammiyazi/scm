@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="footer-main" th:remove="tag">
+        <div>
+            <footer class="main-footer">
+            	<strong>Developed By Southeast Bank PLC. IT Division</strong>
+            	<div class="float-right d-none d-sm-inline-block">
+                    <b>Version</b> 1.0.3
+                </div>
+            	<br/>
+                <strong sec:authorize="hasAuthority('ADMIN')">Maintained By Southeast Bank PLC. FIU ID</strong>
+                <strong sec:authorize="hasAuthority('ADMIN')">Maintained By Southeast Bank PLC. CTMD</strong>
+            </footer>
+            <aside class="control-sidebar control-sidebar-dark">
+            </aside>
+        </div>
+</th:block>
+</body>
+</html>
+
+
+
+
+
+

@@ -1,0 +1,213 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/dashboard}">
+
+<head>
+	<title>Bootstrap 4 Example</title>
+	<meta charset="utf-8">
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<br>
+		<div class="border">
+			<h3 style="margin-left: 18px;">Create Purchase Order</h3>
+			<div class="border" style="margin-left: 10px; margin-right: 10px;">
+				<div style="margin-top: 10px; margin-bottom: 20px;">
+					<div class="row">
+						<div class="col" style="margin-left: 20px;">
+							<label><span style="color: red;">* </span>Supplier Name:</label>
+							<select class="form-control" name="supplierName" required="required">
+								<option value="001">Bd Ortho Care</option>
+								<option value="002">Ortho Applance</option>
+							</select>
+
+						</div>
+						<div class="col" style="margin-right: 10px;">
+							<label><span style="color: red;">* </span>Address:</label>
+							<select class="form-control" name="supplierAddress" required="required">
+								<option value="002">Shaber</option>
+								<option value="003">Nepal</option>
+							</select>
+						</div>
+						<div class="col" style="margin-right: 20px;">
+							<label><span style="color: red;">* </span> Date:</label>
+							<input type="date" class="form-control datepicker " name="fromDate" placeholder="dd/mm/yy"
+								required="required">
+						</div>
+
+					</div>
+					<h3 style="margin-left: 18px;">Implants & Instruments</h3>
+					<form method="POST" name="sample">
+						<div class="row">
+							<div class="col" style="margin-left: 20px;">
+								<label><span style="color: red;">* </span> Implants Name:</label>
+								<select class="form-control" name="implantsName" required="required">
+									<!--<option th:each="data:${productList}" th:value="${data.productCode}"
+									 th:text="${data.productName}"></option>-->
+									<option value="003">A</option>
+									<option value="004">B</option>
+								</select>
+							</div>
+							<div class="col" style="margin-right: 10px;">
+								<label><span style="color: red;">* </span>Implants Type:</label>
+								<select class="form-control" name="implantsTipe" required="required">
+									<option value="004">SS</option>
+									<option value="006">TIT</option>
+								</select>
+							</div>
+							<div class="col" style="margin-right: 20px;">
+								<label><span style="color: red;">* </span>Implants Size:</label>
+								<select class="form-control" name="implantsSize" required="required">
+									<option value="1">1</option>
+									<option value="2">2</option>
+								</select>
+							</div>
+							<div class="col" style="margin-right: 20px;">
+								<label><span style="color: red;">* </span>Quantity:</label>
+								<select class="form-control" name="ImplantsQuantity" required="required">
+									<option value="12">12</option>
+									<option value="11">11</option>
+								</select>
+							</div>
+							<div class="col" style="padding-top: 2%;">
+								<input type="button" name="add" value="Add Data" onclick="addImplants();"
+									class="btn btn-success">
+							</div>
+
+						</div>
+						<br>
+						<div class="row">
+							<div class="col" style="margin-left: 20px;">
+								<label><span style="color: red;">* </span> Instruments Name:</label>
+								<select class="form-control" name="instrumentsName" required="required">
+									<option value="C">C</option>
+									<option value="D">D</option>
+								</select>
+
+							</div>
+							<div class="col" style="margin-right: 20px;">
+								<label><span style="color: red;">* </span>Instruments Size:</label>
+								<select class="form-control" name="InstrumentsSize" required="required">
+									<option value="5">5</option>
+									<option value="6">6</option>
+								</select>
+							</div>
+							<div class="col" style="margin-right: 20px;">
+								<label><span style="color: red;">* </span>Quantity:</label>
+								<select class="form-control" name="InstrumentsQuantity" required="required">
+									<option value="12">12</option>
+									<option value="11">11</option>
+								</select>
+							</div>
+							<div class="col" style="padding-top: 2%;">
+								<input type="button" name="add" value="Add Data" onclick="addInstrument();"
+									class="btn btn-success">
+							</div>
+						</div>
+						<br>
+						<div class="border" style="margin-left: 10px; margin-right: 10px;">
+							<div class="card-body">
+								<table id="tbl" class="table table-bordered table-striped">
+									<thead>
+										<tr>
+											<th>SL</th>
+											<th>Product Name</th>
+											<th>Product Type</th>
+											<th>Size</th>
+											<th>Quantity</th>
+											<th>Amount</th>
+											<th> Delete</th>
+											<th>Update</th>
+										</tr>
+									</thead>
+									<!--  <tbody>
+                                         
+                                    </tbody> -->
+								</table>
+							</div>
+						</div>
+						<br>
+						<br>
+						<div style="margin-left: 20px;">
+							<button class="btn btn-secondary" name="action" type="submit" value="go">Add</button>
+						</div>
+					</form>
+				</div>
+			</div>
+			<br>
+		</div>
+
+
+		<script type="text/javascript">
+
+			function addImplants() {
+				var implantsName = document.sample.implantsName.value;
+				//alert(implantsName)
+				var implantsTipe = document.sample.implantsTipe.value;
+				var implantsSize = document.sample.implantsSize.value;
+				var ImplantsQuantity = document.sample.ImplantsQuantity.value;
+				var name = document.sample.name.value;
+
+				var tr = document.createElement('tr');
+
+				var td1 = tr.appendChild(document.createElement('td'));
+				var td2 = tr.appendChild(document.createElement('td'));
+				var td3 = tr.appendChild(document.createElement('td'));
+				var td4 = tr.appendChild(document.createElement('td'));
+				var td5 = tr.appendChild(document.createElement('td'));
+				var td6 = tr.appendChild(document.createElement('td'));
+				var td7 = tr.appendChild(document.createElement('td'));
+				var td8 = tr.appendChild(document.createElement('td'));
+
+
+				td2.innerHTML = implantsName;
+				td3.innerHTML = implantsTipe;
+				td4.innerHTML = implantsSize;
+				td5.innerHTML = ImplantsQuantity;
+				td6.innerHTML = '<input type="text" name="amount">';
+				td7.innerHTML = '<input type="button" name="del" value="Delete" onclick="delStudent(this);" class="btn btn-danger">'
+				td8.innerHTML = '<input type="button" name="up" value="Update" onclick="UpStud(this);" class="btn btn-primary">'
+
+				document.getElementById("tbl").appendChild(tr);
+			}
+			function addInstrument() {
+				var instrumentsName = document.sample.instrumentsName.value;
+				var InstrumentsSize = document.sample.InstrumentsSize.value;
+				var InstrumentsQuantity = document.sample.InstrumentsQuantity.value;
+				var name = document.sample.name.value;
+
+				var tr = document.createElement('tr');
+
+				var td1 = tr.appendChild(document.createElement('td'));
+				var td2 = tr.appendChild(document.createElement('td'));
+				var td3 = tr.appendChild(document.createElement('td'));
+				var td4 = tr.appendChild(document.createElement('td'));
+				var td5 = tr.appendChild(document.createElement('td'));
+				var td6 = tr.appendChild(document.createElement('td'));
+				var td7 = tr.appendChild(document.createElement('td'));
+				var td8 = tr.appendChild(document.createElement('td'));
+
+
+				td2.innerHTML = instrumentsName;
+				td4.innerHTML = InstrumentsSize;
+				td5.innerHTML = InstrumentsQuantity;
+				td6.innerHTML = '<input type="text" name="amount">';
+				td7.innerHTML = '<input type="button" name="del" value="Delete" onclick="delStudent(this);" class="btn btn-danger">'
+				td8.innerHTML = '<input type="button" name="up" value="Update" onclick="UpStud(this);" class="btn btn-primary">'
+
+				document.getElementById("tbl").appendChild(tr);
+			}
+
+
+
+			function delStudent(Stud) {
+				var s = Stud.parentNode.parentNode;
+				s.parentNode.removeChild(s);
+			}
+
+
+		</script>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,402 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/dashboard}">
+<head>
+    <title>Bootstrap 4 Example</title>
+    <meta charset="utf-8">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css"> -->
+    </head>
+<body>
+     <div layout:fragment="content">
+        <br>
+		<div class="border">
+            <h3 style="margin-left: 18px;">Generate Doctor Order List</h3>
+		    <div class="border" style="margin-left: 10px; margin-right: 10px;">
+                <div style="margin-top: 10px; margin-bottom: 20px;">
+                    <div class="row">
+                        <div class="col" style="margin-left: 20px;">
+                            <label><span style="color: red;">* </span> Doctors Name:</label> 
+                            <select class="form-control" name="doctorsName"  required="required">
+                                <option value="">Default</option>
+                            </select>
+                            
+                        </div>
+                        <div class="col" style="margin-right: 10px;">
+                            <label><span style="color: red;">* </span>Hospitals name:</label> 
+                            <select class="form-control" name="hospitalName"  required="required">
+                                <option value="">Default</option>
+                            </select>
+                        </div>
+                        <div class="col" style="margin-right: 20px;">
+                            <label><span style="color: red;">* </span> Date:</label> 
+                            <input type="text" class="form-control datepicker "  name="fromDate" placeholder="dd/mm/yy"  required="required">	
+                        </div>
+                        
+                    </div>  
+                    <h3 style="margin-left: 18px;">Implants & Instruments</h3>    
+                    <form method="POST" name="sample">
+                        <div class="row">
+                            <div class="col" style="margin-left: 20px;">
+                                <label><span style="color: red;">* </span> Implants Name:</label> 
+                                <select class="form-control" name="implantsName"  required="required">
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                </select> 
+                            </div>
+                            <div class="col" style="margin-right: 10px;">
+                                <label><span style="color: red;">* </span>Implants Tipe:</label> 
+                                <select class="form-control" name="implantsTipe"  required="required">
+                                    <option value="SS">SS</option>
+                                    <option value="TIT">TIT</option>
+                                </select>
+                            </div>
+                            <div class="col" style="margin-right: 20px;">
+                                <label><span style="color: red;">* </span>Implants Size:</label> 
+                                <select class="form-control" name="implantsSize"  required="required">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                </select>
+                            </div>
+                            <div class="col" style="padding-top: 2%;">
+                                <input type="button" name="add" value="Add Data" onclick="addImplants();" class="btn btn-success">	
+                            </div>
+
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col" style="margin-left: 20px;">
+                                <label><span style="color: red;">* </span> Instruments Name:</label> 
+                                <select class="form-control" name="instrumentsName"  required="required">
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
+                                
+                            </div>
+                            <div class="col" style="margin-right: 20px;">
+                                <label><span style="color: red;">* </span>Instruments Size:</label> 
+                                <select class="form-control" name="InstrumentsSize"  required="required">
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                </select>
+                            </div> 
+                            <div class="col" style="margin-right: 20px;">
+                                <label><span style="color: red;">* </span>Quantity:</label> 
+                                <select class="form-control" name="InstrumentsQuantity"  required="required">
+                                    <option value="12">12</option>
+                                    <option value="11">11</option>
+                                </select>
+                            </div>
+                            <div class="col" style="padding-top: 2%;">
+                                <input type="button" name="add" value="Add Data" onclick="addInstrument();" class="btn btn-success">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="border"  style="margin-left: 10px; margin-right: 10px;">
+                            <div class="card-body">
+                                <table id="tbl" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                        	<th>SL</th>
+	                                        <th>Product Name</th>
+	                                        <th>Product Tipe</th>
+	                                        <th>Size</th>
+	                                        <th>Quantity</th>
+	                                        <th>Amount</th>
+	                                        <th> Delete</th>
+	                                        <th>Update</th>
+                                        </tr>
+                                    </thead>
+                                   <!--  <tbody>
+                                         
+                                    </tbody> -->
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                         <div style="margin-left: 20px;">
+			                <button class="btn btn-secondary" name="action" type="submit" value="go">Add</button>
+			            </div>
+                    </form>
+                </div>
+            </div>
+            <br>
+        </div>
+   
+
+ <script type="text/javascript">
+       
+    function addImplants()
+    { 
+        var implantsName=document.sample.implantsName.value; 
+        var implantsTipe=document.sample.implantsTipe.value;
+        var implantsSize=document.sample.implantsSize.value;
+        var name=document.sample.name.value; 
+        
+        var tr = document.createElement('tr');
+        
+        var td1 = tr.appendChild(document.createElement('td'));
+        var td2 = tr.appendChild(document.createElement('td'));
+        var td3 = tr.appendChild(document.createElement('td'));
+        var td4 = tr.appendChild(document.createElement('td'));
+        var td5 = tr.appendChild(document.createElement('td'));
+        var td6 = tr.appendChild(document.createElement('td'));
+        var td7 = tr.appendChild(document.createElement('td'));
+        var td8 = tr.appendChild(document.createElement('td'));
+        
+        
+        td2.innerHTML=implantsName;
+        td3.innerHTML=implantsTipe;
+        td4.innerHTML=implantsSize;
+        td6.innerHTML='<input type="text" name="amount">';
+        td7.innerHTML='<input type="button" name="del" value="Delete" onclick="delStudent(this);" class="btn btn-danger">'
+        td8.innerHTML='<input type="button" name="up" value="Update" onclick="UpStud(this);" class="btn btn-primary">'
+
+        document.getElementById("tbl").appendChild(tr);
+    }
+    function addInstrument()
+    { 
+        var instrumentsName=document.sample.instrumentsName.value; 
+        var InstrumentsSize=document.sample.InstrumentsSize.value;
+        var InstrumentsQuantity=document.sample.InstrumentsQuantity.value;
+        var name=document.sample.name.value; 
+        
+        var tr = document.createElement('tr');
+        
+        var td1 = tr.appendChild(document.createElement('td'));
+        var td2 = tr.appendChild(document.createElement('td'));
+        var td3 = tr.appendChild(document.createElement('td'));
+        var td4 = tr.appendChild(document.createElement('td'));
+        var td5 = tr.appendChild(document.createElement('td'));
+        var td6 = tr.appendChild(document.createElement('td'));
+        var td7 = tr.appendChild(document.createElement('td'));
+        var td8 = tr.appendChild(document.createElement('td'));
+        
+        
+        td2.innerHTML=instrumentsName;
+        td3.innerHTML=InstrumentsSize;
+        td4.innerHTML=InstrumentsQuantity;
+        td6.innerHTML='<input type="text" name="amount">';
+        td7.innerHTML='<input type="button" name="del" value="Delete" onclick="delStudent(this);" class="btn btn-danger">'
+        td8.innerHTML='<input type="button" name="up" value="Update" onclick="UpStud(this);" class="btn btn-primary">'
+
+        document.getElementById("tbl").appendChild(tr);
+    }
+
+    // function UpStud(stud){
+    //     var implantsName=document.sample.implantsName.value; 
+    //     var implantsTipe=document.sample.implantsTipe.value; 
+    //     var implantsSize=document.sample.implantsTipe.implantsSize; 
+    //     var s = stud.parentNode.parentNode;
+    //     var tr = document.createElement('tr');
+        
+    //     var td1 = tr.appendChild(document.createElement('td'));
+    //     var td2 = tr.appendChild(document.createElement('td'));
+    //     var td3 = tr.appendChild(document.createElement('td'));
+    //     var td4 = tr.appendChild(document.createElement('td'));
+    //     var td5 = tr.appendChild(document.createElement('td'));
+    //     var td6 = tr.appendChild(document.createElement('td'));
+    //     var td7 = tr.appendChild(document.createElement('td'));
+    //     var td8 = tr.appendChild(document.createElement('td'));
+        
+        
+    //     td2.innerHTML='<input type="text" name="implantsName1">';
+    //     td3.innerHTML='<input type="text" name="implantsTipe1">';
+    //     td4.innerHTML='<input type="text" name="implantsSize1">';
+    //     td7.innerHTML='<input type="button" name="del" value="Delete" onclick="delStudent(this);" class="btn btn-danger">'
+    //     td8.innerHTML='<input type="button" name="up" value="Update" onclick="addUpStud(this);" class="btn btn-primary">'
+
+    //     document.getElementById("tbl").replaceChild(tr, s);
+    // }
+
+    // function addUpStud(stud){
+    //     var implantsName=document.sample.implantsName1.value; 
+    //     var implantsTipe=document.sample.implantsTipe1.value; 
+    //     var implantsSize=document.sample.implantsSize1.value; 
+    //     var s = stud.parentNode.parentNode;
+    //     var tr = document.createElement('tr');
+        
+    //     var td1 = tr.appendChild(document.createElement('td'));
+    //     var td2 = tr.appendChild(document.createElement('td'));
+    //     var td3 = tr.appendChild(document.createElement('td'));
+    //     var td4 = tr.appendChild(document.createElement('td'));
+    //     var td5 = tr.appendChild(document.createElement('td'));
+    //     var td6 = tr.appendChild(document.createElement('td'));
+    //     var td7 = tr.appendChild(document.createElement('td'));
+    //     var td8 = tr.appendChild(document.createElement('td'));
+        
+        
+    //     td2.innerHTML=implantsName;
+    //     td3.innerHTML=implantsTipe;
+    //     td3.innerHTML=implantsSize;
+    //     td7.innerHTML='<input type="button" name="del" value="Delete" onclick="delStudent(this);" class="btn btn-danger">'
+    //     td8.innerHTML='<input type="button" name="up" value="Update" onclick="UpStud(this);" class="btn btn-primary">'
+
+    //     document.getElementById("tbl").replaceChild(tr, s);
+    // }
+
+    function delStudent(Stud){
+        var s=Stud.parentNode.parentNode;
+        s.parentNode.removeChild(s);
+    }
+    
+    
+    </script>
+</div>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/dashboard}">
+<head>
+  <title>Bootstrap 4 Example</title>
+  <meta charset="utf-8">
+
+</head>
+<body>
+	<div layout:fragment="content">
+		<br>
+		<div class="border">
+			<h3 style="margin-left: 18px;">Generate Doctor Order List</h3>
+			<div class="border" style="margin-left: 10px; margin-right: 10px;">
+				<div style="margin-top: 10px; margin-bottom: 20px;">
+					
+                    <div class="row">
+                        <div class="col" style="margin-left: 20px;">
+                            <label><span style="color: red;">* </span> Doctors Name:</label> 
+                            <select class="form-control" name="doctorsName"  required="required">
+                                <option value="">Default</option>
+                            </select>
+                            
+                        </div>
+                        <div class="col" style="margin-right: 10px;">
+                            <label><span style="color: red;">* </span>Hospitals name:</label> 
+                            <select class="form-control" name="hospitalName"  required="required">
+                                <option value="">Default</option>
+                            </select>
+                        </div>
+                        <div class="col" style="margin-right: 20px;">
+                            <label><span style="color: red;">* </span> Date:</label> 
+                            <input type="text" class="form-control datepicker "  name="fromDate" placeholder="dd/mm/yy"  required="required">	
+                        </div>
+                        
+                    </div> 
+					<br>
+                    <div>
+                        <h3 style="margin-left: 18px;">Implants & Instruments</h3>
+                        <div style="margin-top: 10px; margin-bottom: 20px;">
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px;">
+                                    <label><span style="color: red;">* </span> Implants Name:</label> 
+                                    <select class="form-control" name="doctorsName"  required="required">
+                                        <option value="">Default</option>
+                                    </select> 
+                                </div>
+                                <div class="col" style="margin-right: 10px;">
+                                    <label><span style="color: red;">* </span>Implants Tipe:</label> 
+                                    <select class="form-control" name="hospitalName"  required="required">
+                                        <option value="">Default</option>
+                                    </select>
+                                </div>
+                                <div class="col" style="margin-right: 20px;">
+                                    <label><span style="color: red;">* </span>Implants Size:</label> 
+                                    <select class="form-control" name="hospitalName"  required="required">
+                                        <option value="">Default</option>
+                                    </select>
+                                </div>
+                                <div class="col" style="padding-top: 2%;">
+                                    <button class="btn btn-secondary" name="action" type="submit"  value="go">Add</button>	
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col" style="margin-left: 20px;">
+                                    <label><span style="color: red;">* </span> Instruments Name:</label> 
+                                    <select class="form-control" name="doctorsName"  required="required">
+                                        <option value="">Default</option>
+                                    </select>
+                                    
+                                </div>
+                                <div class="col" style="margin-right: 20px;">
+                                    <label><span style="color: red;">* </span>Instruments Size:</label> 
+                                    <select class="form-control" name="hospitalName"  required="required">
+                                        <option value="">Default</option>
+                                    </select>
+                                </div> 
+                                <div class="col" style="margin-right: 20px;">
+                                    <label><span style="color: red;">* </span>Quantity:</label> 
+                                    <select class="form-control" name="hospitalName"  required="required">
+                                        <option value="">Default</option>
+                                    </select>
+                                </div>
+                                <div class="col" style="padding-top: 2%;">
+                                    <button class="btn btn-secondary" name="action" type="submit"  value="go">Add</button>	
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   
+				</div>
+				<br>
+			</div>
+            <br>
+            <div class="border"  style="margin-left: 10px; margin-right: 10px;">
+				<div class="card-body">
+				<table id="example1" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>SL</th>
+							<th>Product Name</th>
+							<th>Product Tipe</th>
+							<th>Size</th>
+							<th>Quantity</th>
+							<th>Amount</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr >
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+            <div style="margin-left: 20px;">
+                <button class="btn btn-secondary" name="action" type="submit" value="go">Add</button>
+            </div>
+			</div>
+		</div>
+	</div>
+</body>
+</html> -->

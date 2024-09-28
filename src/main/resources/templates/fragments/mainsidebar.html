@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="main-sidebar" th:remove="tag">
+		<aside class="main-sidebar sidebar-light-primary elevation-4">
+
+		<a th:href="@{/}" class="brand-link"> <img
+			th:src="@{/dist/img/bd.png}" alt="Logo"
+			class="brand-image elevation-3" style="opacity: .8"> <br /> <br />
+			<span class="brand-text font-weight-bold"><p>Southeast
+					Bank PLC.</p></span>
+		</a>
+			<!--<nav class="mt-2">
+				<ul class="nav nav-pills nav-sidebar flex-column" >
+					<li class="nav-item"><a class="nav-link" th:href="@{/report/table}">
+					<i class="fa fa-usd nav-icon"></i>
+					<p>AAAAAAA</p></a></li>
+					
+					<li class="nav-item"><a class="nav-link" th:href="@{/report/home}">
+					<i class="fa fa-usd nav-icon"></i>
+					<p>BBBBB</p></a></li>
+					
+
+				
+					<li class="nav-item"><a class="nav-link" th:href="@{/purchase/create}">
+					<i class="fa fa-usd nav-icon"></i>
+					<p>Purchase</p></a></li>
+					
+					<li class="nav-item"><a class="nav-link" th:href="@{/create/purchase}">
+					<i class="fa fa-usd nav-icon"></i>
+					<p>Purchase Create</p></a></li>
+					
+					<li class="nav-item"><a class="nav-link" th:href="@{/product/manage}">
+					<i class="fa fa-usd nav-icon"></i>
+					<p>product</p></a></li>
+					
+					<li class="nav-item"><a class="nav-link" th:href="@{/vairiant/manage}">
+					<i class="fa fa-usd nav-icon"></i>
+					<p>vairiant</p></a></li>
+					
+																	
+				</ul>
+				
+				
+				
+				
+				
+			</nav>-->
+			
+			<nav class="mt-2">
+		       <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+		         
+				 <li class="nav-item">
+		            <a href="#" class="nav-link">
+		              <i class="fa fa-dashboard"></i>
+		              <p>
+		                Dashboard
+		              </p>
+		            </a>
+		            <ul class="nav nav-treeview">
+		              <li class="nav-item">
+		                <a th:href="@{/create/purchase}" class="nav-link">
+		                  <i class="fa fa-circle-o"></i>
+		                  <p>Purchase Create</p>
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a href="pages/layout/top-nav-sidebar.html" class="nav-link">
+		                  <i class="fa fa-circle-o"></i>
+		                  <p> Sealch Create</p>
+		                </a>
+		              </li>
+		             <!-- <li class="nav-item">
+		                <a href="pages/layout/boxed.html" class="nav-link">
+		                 <i class="fa fa-circle-o"></i>
+		                  <p>Create vairiant</p>
+		                </a>
+		              </li>-->
+		            </ul>
+		          </li>
+				 
+				 
+				 
+				 
+				 <li class="nav-item">
+		            <a href="#" class="nav-link">
+		              <i class="fa fa-gear" ></i>
+		              <p>
+		                Setting 
+		              </p>
+		            </a>
+		            <ul class="nav nav-treeview">
+		              <li class="nav-item">
+		                <a  th:href="@{/supplier/manage}" class="nav-link">
+		                 <i class="fa fa-circle-o"></i>
+		                  <p>Create Supplier</p>
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a th:href="@{/implants/manage}" class="nav-link">
+		                  <i class="fa fa-circle-o"></i>
+		                  <p>Create Implants</p>
+		                </a>
+		              </li>
+		              <li class="nav-item">
+		                <a th:href="@{/instruments/manage}" class="nav-link">
+		                  <i class="fa fa-circle-o"></i>
+		                  <p>Create Instruments</p>
+		                </a>
+		              </li>
+					  <li class="nav-item">
+	  	                <a th:href="@{/implantsSize/manage}" class="nav-link">
+	  	                  <i class="fa fa-circle-o"></i>
+	  	                  <p>Implants Size</p>
+	  	                </a>
+	  	              </li>
+					  <li class="nav-item">
+    	                <a th:href="@{/instrumentsSize/manage}" class="nav-link">
+    	                  <i class="fa fa-circle-o"></i>
+    	                  <p>Instruments Size</p>
+    	                </a>
+    	              </li>
+					  <li class="nav-item">
+     	                <a th:href="@{/doctorName/manage}" class="nav-link">
+     	                  <i class="fa fa-circle-o"></i>
+     	                  <p>Doctor Name</p>
+     	                </a>
+     	              </li>
+					  <li class="nav-item">
+	 	                <a th:href="@{/hospitalName/manage}" class="nav-link">
+	 	                  <i class="fa fa-circle-o"></i>
+	 	                  <p>Hospital Name</p>
+	 	                </a>
+	 	              </li>
+		            </ul>
+		          </li>
+				  
+				  
+				  <li class="nav-item">
+  		            <a href="#" class="nav-link">
+  		              <i class="fa fa-book"></i>
+  		              <p>
+  		                Report 
+  		              </p>
+  		            </a>
+  		            <ul class="nav nav-treeview">
+  		              <li class="nav-item">
+  		                <a href="pages/layout/top-nav.html" class="nav-link">
+  		                 <i class="fa fa-circle-o"></i>
+  		                  <p>Total Purchase</p>
+  		                </a>
+  		              </li>
+  		              <li class="nav-item">
+  		                <a href="implants/manage" class="nav-link">
+  		                  <i class="fa fa-circle-o"></i>
+  		                  <p>Total Sealch</p>
+  		                </a>
+  		              </li>
+  		              <li class="nav-item">
+  		                <a href="pages/layout/boxed.html" class="nav-link">
+  		                  <i class="fa fa-circle-o"></i>
+  		                  <p>Total Sealch Amount</p>
+  		                </a>
+  		              </li>
+  		            </ul>
+  		          </li>
+		       </ul>
+		     </nav>
+		</aside>
+	</th:block>
+</body>
+</html>
+
+
+
+
+
+
+

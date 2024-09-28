@@ -1,0 +1,99 @@
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/dashboard}">
+
+<head>
+<title>Supplier</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script>
+	$(document).ready(function() {
+		$(function() {
+			var date = $('#date').datepicker({
+				dateFormat : 'dd/mm/yy'
+			}).val();
+
+		});
+
+	});
+
+	$(function() {
+		$("#example1").DataTable({
+			"fixedHeader" : true,
+			//"paging": false,
+			"responsive" : true,
+			"responsive" : true,
+			"lengthChange" : false,
+			"autoWidth" : false,
+			"buttons" : [ "excel" ],
+
+		}).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+	});
+</script>
+</head>
+
+<body>
+	<div layout:fragment="content">
+		<br>
+		<div class="border">
+			<h3 style="margin-left: 18px;">Hospital Name</h3>
+			<div class="border" style="margin-left: 10px; margin-right: 10px;">
+				<div style="margin-top: 10px; margin-bottom: 10px;">  
+					<form method="post" th:action="@{/hospitalName/save}">
+						<div class="row">
+		                    <div class="col" style="margin-left: 20px;">
+		                        <label><span style="color: red;">* </span> Hospital Name:</label> 
+								<input type="text" name="hospitalName" class="form-control">	 
+		                    </div>
+		                    <div class="col" style="margin-right: 20px;">
+		                        <label><span style="color: red;">* </span>Date:</label> 
+								<!--<input type="date" name="date" class="form-control">	-->
+								<input type="date" class="form-control datepicker "  name="date" placeholder="dd/mm/yy"  required="required">		
+		                    </div>
+		                </div>
+						<br>
+						<button type="submit">Submit</button>
+					</form>
+				</div>
+				
+			</div>
+			<br>
+			<hr>
+			<div class="card-body"
+				style="overflow-x: scroll; margin-right: 10px;">
+				<!-- overflow-y: scroll; -->
+				<table id="example1" class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>SL</th>
+							<th>Hospital Name</th>
+							<th>Date</th>
+							<th>Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="data, index : ${hospitalNameList}">
+							<td th:text="${index.index + 1}"></td>
+							<td th:text="${data.hospitalName}"></td>
+							<td th:text="${data.date}"></td>
+							<td class="text-right">
+								<button class="btn btn-success"><i class="fa fa-eye"></i></button>
+								<button class="btn btn-primary" ><i class="fa fa-edit"></i></button>
+								<button class="btn btn-danger" ><i class="fa fa-trash"></i></button>
+							</td>
+						</tr>
+					</tbody>
+					
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+<style>
+div.container {
+	width: 80%;
+}
+</style>
+</html>
